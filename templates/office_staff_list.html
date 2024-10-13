@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Office Staff List</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f9f9f9;
+            padding: 20px;
+        }
+        h1 {
+            color: #2c3e50;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        a:hover {
+            color: #2980b9;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <h1>Office Staff List</h1>
+
+    {% if office_staffs %}
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>DOB</th>
+                <th>Address</th>
+                <th>Sex</th>
+                <th>Blood Group</th>
+                <th>Email</th>
+                <th>Contact</th>
+                <th>Alternate Contact</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for office_staff in office_staffs %}
+            <tr>
+                <td>{{ office_staff['id'] }}</td>
+                <td>{{ office_staff['name'] }}</td>
+                <td>{{ office_staff['dob'] }}</td>
+                <td>{{ office_staff['address'] }}</td>
+                <td>{{ office_staff['sex'] }}</td>
+                <td>{{ office_staff['blood_group'] }}</td>
+                <td>{{ office_staff['email'] }}</td>
+                <td>{{ office_staff['contact'] }}</td>
+                <td>{{ office_staff['alternate_contact'] }}</td>
+                <td>
+                    <a href="#" onclick="confirmDelete({{ office_staff['id'] }})">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+        <p>No officestaffs found.</p>
+    {% endif %}
+    <br>
+    <form action="{{ url_for('add_office_staff') }}" method="GET">
+        <button type="submit">Go Back to Add Office Staff</button>
+    </form>
+    <br>
+    <form action="{{ url_for('dashboard') }}" method="GET">
+        <button type="submit">Back to Dashboard</button>
+    </form>
+    <script>
+        function confirmDelete(id) {
+            if (confirm("Are you sure you want to delete this officestaff?")) {
+                window.location.href = "/delete_office_staff/" + id;
+            }
+        }
+    </script>
+</body>
+</html>
